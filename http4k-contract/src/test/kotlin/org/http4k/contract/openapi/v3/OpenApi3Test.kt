@@ -9,5 +9,6 @@ import org.http4k.format.Argo
 class OpenApi3Test : ContractRendererContract<JsonNode>(Argo, OpenApi3(
     ApiInfo("title", "1.2", "module description"),
     Argo,
-    listOf(AddSimpleFieldToRootNode)
+    listOf(AddSimpleFieldToRootNode),
+    listOf(ServerObject("http://localhost", "server description"))
 ))

@@ -1,0 +1,18 @@
+{
+  "info": {
+    "title": "title",
+    "version": "1.2",
+    "description": "module description"
+  },
+  "tags": [
+  ],
+  "paths": {
+  },
+  "components": {
+    "schemas": {
+    },
+    "securitySchemes": {
+    }
+  },
+  "openapi": "3.0.0"
+}

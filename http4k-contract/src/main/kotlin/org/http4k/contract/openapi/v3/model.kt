@@ -20,6 +20,11 @@ data class Components<NODE>(
     val securitySchemes: NODE
 )
 
+data class ServerObject(
+    val url: String,
+    val description: String?
+)
+
 sealed class ApiPath<NODE>(
     val summary: String,
     val description: String?,

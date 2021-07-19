@@ -51,19 +51,21 @@ class OpenApi3<NODE : Any>(
     private val apiInfo: ApiInfo,
     private val json: Json<NODE>,
     private val extensions: List<OpenApiExtension> = emptyList(),
+    private val servers: List<ServerObject> = emptyList(),
     // note that this is the basic OpenApi renderer - if you want reflective Schema generation
     // then you want to use ApiRenderer.Auto() instead with a compatible JSON instance
-    private val apiRenderer: ApiRenderer<Api<NODE>, NODE> = OpenApi3ApiRenderer(json),
+    private val apiRenderer: ApiRenderer<Api<NODE>, NODE> = OpenApi3ApiRenderer(json, servers),
     private val securityRenderer: SecurityRenderer = OpenApi3SecurityRenderer,
     private val errorResponseRenderer: ErrorResponseRenderer = JsonErrorResponseRenderer(json)
 ) : ContractRenderer, ErrorResponseRenderer by errorResponseRenderer {
     private data class PathAndMethod<NODE>(val path: String, val method: Method, val pathSpec: ApiPath<NODE>)
 
-    constructor(
+   constructor(
         apiInfo: ApiInfo,
         json: AutoMarshallingJson<NODE>,
-        extensions: List<OpenApiExtension> = emptyList()
-    ) : this(apiInfo, json, extensions, ApiRenderer.Auto(json))
+        extensions: List<OpenApiExtension> = emptyList(),
+        servers: List<ServerObject> = emptyList()
+    ) : this(apiInfo, json, extensions, servers, ApiRenderer.Auto(json))
 
     override fun description(contractRoot: PathSegments, security: Security?, routes: List<ContractRoute>): Response {
         val allSecurities = routes.map { it.meta.security } + listOfNotNull(security)

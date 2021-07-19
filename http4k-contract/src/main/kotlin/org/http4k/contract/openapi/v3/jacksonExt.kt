@@ -16,7 +16,8 @@ import kotlin.reflect.full.createInstance
 /**
  * Defaults for configuring OpenApi3 with Jackson
  */
-fun OpenApi3(apiInfo: ApiInfo, json: Jackson = Jackson, extensions: List<OpenApiExtension> = emptyList()) = OpenApi3(apiInfo, json, extensions, ApiRenderer.Auto(json, AutoJsonToJsonSchema(json)))
+fun OpenApi3(apiInfo: ApiInfo, json: Jackson = Jackson, extensions: List<OpenApiExtension> = emptyList(), servers: List<ServerObject> = emptyList()) =
+    OpenApi3(apiInfo, json, extensions, servers, ApiRenderer.Auto(json, AutoJsonToJsonSchema(json)))
 
 fun AutoJsonToJsonSchema(json: Jackson) = AutoJsonToJsonSchema(
     json,

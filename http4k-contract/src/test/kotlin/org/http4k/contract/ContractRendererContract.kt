@@ -2,50 +2,25 @@ package org.http4k.contract
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
+import org.http4k.contract.security.*
 import org.http4k.contract.security.ApiKeySecurity
-import org.http4k.contract.security.AuthCodeOAuthSecurity
 import org.http4k.contract.security.BasicAuthSecurity
-import org.http4k.contract.security.BearerAuthSecurity
-import org.http4k.contract.security.and
-import org.http4k.contract.security.or
-import org.http4k.core.Body
+import org.http4k.core.*
 import org.http4k.core.ContentType.Companion.APPLICATION_FORM_URLENCODED
 import org.http4k.core.ContentType.Companion.APPLICATION_JSON
 import org.http4k.core.ContentType.Companion.APPLICATION_XML
 import org.http4k.core.ContentType.Companion.OCTET_STREAM
 import org.http4k.core.ContentType.Companion.TEXT_PLAIN
-import org.http4k.core.Credentials
-import org.http4k.core.Method.GET
-import org.http4k.core.Method.POST
-import org.http4k.core.Method.PUT
-import org.http4k.core.Request
-import org.http4k.core.Response
+import org.http4k.core.Method.*
 import org.http4k.core.Status.Companion.CREATED
 import org.http4k.core.Status.Companion.FORBIDDEN
 import org.http4k.core.Status.Companion.OK
-import org.http4k.core.Uri
-import org.http4k.core.with
 import org.http4k.format.Jackson.auto
 import org.http4k.format.Json
-import org.http4k.lens.Cookies
-import org.http4k.lens.FormField
-import org.http4k.lens.Header
-import org.http4k.lens.Invalid
-import org.http4k.lens.LensFailure
-import org.http4k.lens.Meta
-import org.http4k.lens.Missing
-import org.http4k.lens.MultipartFormField
-import org.http4k.lens.MultipartFormFile
+import org.http4k.lens.*
 import org.http4k.lens.ParamMeta.NumberParam
 import org.http4k.lens.ParamMeta.StringParam
-import org.http4k.lens.Path
-import org.http4k.lens.Query
 import org.http4k.lens.Validator.Strict
-import org.http4k.lens.boolean
-import org.http4k.lens.int
-import org.http4k.lens.multipartForm
-import org.http4k.lens.string
-import org.http4k.lens.webForm
 import org.http4k.routing.bind
 import org.http4k.security.FakeOAuthPersistence
 import org.http4k.security.OAuthProvider
@@ -76,7 +51,6 @@ abstract class ContractRendererContract<NODE>(private val json: Json<NODE>, prot
     @Test
     open fun `renders as expected`(approver: Approver) {
         val customBody = json.body("the body of the message").toLens()
-
         val router = "/basepath" bind contract {
             renderer = rendererToUse
             security = ApiKeySecurity(Query.required("the_api_key"), { true })
