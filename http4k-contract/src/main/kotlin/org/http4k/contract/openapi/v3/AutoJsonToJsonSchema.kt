@@ -1,5 +1,6 @@
 package org.http4k.contract.openapi.v3
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter
 import org.http4k.format.AutoMarshallingJson
 import org.http4k.format.JsonType
 import org.http4k.lens.ParamMeta
@@ -205,6 +206,9 @@ private sealed class SchemaNode(
     abstract fun arrayItem(): ArrayItem
 
     val description = metadata?.description
+
+    @get:JsonAnyGetter
+    val extra: Map<String, Any>? = metadata?.extra
 
     class Primitive(name: String, paramMeta: ParamMeta, isNullable: Boolean, example: Any?, metadata: FieldMetadata?) :
         SchemaNode(name, paramMeta, isNullable, example, metadata) {

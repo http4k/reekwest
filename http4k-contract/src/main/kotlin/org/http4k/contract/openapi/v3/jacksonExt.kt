@@ -68,7 +68,7 @@ object JacksonFieldMetadataRetrievalStrategy : FieldMetadataRetrievalStrategy {
     override fun invoke(target: Any, fieldName: String): FieldMetadata =
         FieldMetadata(description = target.javaClass.findPropertyDescription(fieldName))
 
-    private fun Class<Any>.findPropertyDescription(name: String): String? =
+    fun Class<Any>.findPropertyDescription(name: String): String? =
         kotlin.constructors.first().parameters
             .firstOrNull { p -> p.kind == KParameter.Kind.VALUE && p.name == name }
             ?.let { p ->

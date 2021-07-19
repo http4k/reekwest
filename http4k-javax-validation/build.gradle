@@ -1,0 +1,15 @@
+description = 'Http4k javax-validation support'
+
+dependencies {
+    api project(":http4k-core")
+    api project(":http4k-contract")
+    api project(":http4k-format-jackson")
+
+    // TODO remove with demo
+    api project(":http4k-server-jetty")
+
+    implementation "javax.validation:validation-api:2.0.1.Final"
+    implementation "io.swagger.core.v3:swagger-annotations:2.1.7"
+    testImplementation project(path: ":http4k-core", configuration: 'testArtifacts')
+    testImplementation Config.TestDependencies
+}
